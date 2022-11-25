@@ -10,7 +10,7 @@ html{
     color: $text;
 }
 body{
-    background-color: $lightGray
+    padding: 0 2rem;
 }
 *, *:before, *:after{
     box-sizing: inherit;
@@ -27,13 +27,14 @@ img{
     height: 100%;
     object-fit: cover;
 }
-p{
-    font-size: 1.5rem;
+p, button{
+    font-size: 1.4rem;
     line-height: 2.25rem;
+    border: none;
 }
 a, li{
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 label{
     font-size: 1.7rem;

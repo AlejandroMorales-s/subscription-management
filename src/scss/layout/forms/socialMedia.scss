@@ -1,0 +1,44 @@
+.login-signup-social-media-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  .line-section-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    hr{
+      width: 100%;
+      background-color: $black;
+    }
+  }
+  .social-media-buttons-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    button{
+      padding: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      font-weight: $medium;
+      border-radius: 3rem;
+      -webkit-border-radius: 3rem;
+      -moz-border-radius: 3rem;
+      -ms-border-radius: 3rem;
+      -o-border-radius: 3rem;
+      &:first-of-type{
+        color: $white;
+        background-color: #2E89FF;
+      }
+      .social-media-button-icon{
+        font-size: 2.5rem;
+        &:first-of-type{
+          fill: $white;
+        }
+      }
+    }
+  }
+}
