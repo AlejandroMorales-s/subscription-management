@@ -4,7 +4,7 @@ import {
   signInWithPopup,
   fetchSignInMethodsForEmail,
 } from "firebase/auth";
-import { auth } from "firebase";
+import { auth } from "./firebase";
 
 const supportedSignInMethods = [
   GoogleAuthProvider.PROVIDER_ID,
