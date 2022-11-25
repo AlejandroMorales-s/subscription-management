@@ -1,7 +1,7 @@
 .login-signup-social-media-container{
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 2rem;
   .line-section-container{
     width: 100%;
     display: flex;
@@ -11,6 +11,7 @@
     hr{
       width: 100%;
       background-color: $black;
+      height: 0.5px;
     }
   }
   .social-media-buttons-container{
