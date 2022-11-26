@@ -2,7 +2,7 @@ import {Field} from "formik"
 import { useState } from "react"
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai'
 
-export default function Input({type,name, placeholder, label}) {
+export default function Input({type, name, placeholder, label, className = ''}) {
     const [isVisible, setIsVisible] = useState(false)
     let typeHandler = 'password'
     
@@ -14,7 +14,8 @@ export default function Input({type,name, placeholder, label}) {
     return (
         <div className="input-form-container">
             <label>{label}</label>
-            <Field type={type === 'password' ? typeHandler : type} name={name} placeholder={placeholder}/>
+              
+            <Field className={className} type={type === 'password' ? typeHandler : type} name={name} placeholder={placeholder}/>
             {isVisible && type === 'password' && <AiOutlineEyeInvisible className="password-icon" onClick={showPassword}/>}
             {!isVisible && type === 'password' && <AiOutlineEye className="password-icon" onClick={showPassword}/>}
         </div>
