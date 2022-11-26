@@ -1,11 +1,54 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 //* Firebase
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
 import { providerLogin } from "../../libs/auth";
+import { auth } from "../../libs/firebase";
+import { addError } from "../error/errorSlice";
 
 //* Async thunks
+export const loginWithEmail = createAsyncThunk(
+  "user/login",
+  async ({ password, email }, thunkAPI) => {
+    let userData = {};
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(async (res) => {
+        const { displayName, email, uid, photoURL } = res.user;
+        let role = "";
+
+        const docRef = doc(database, "users", uid);
+
+        await getDoc(docRef)
+          .then((data) => (role = data.get("role")))
+          .catch((error) => console.log(error));
+
+        userData = {
+          displayName,
+          email,
+          uid,
+          photoURL,
+          role,
+        };
+      })
+      .catch((error) => {
+        if (error.message === "Firebase: Error (auth/wrong-password).") {
+          thunkAPI.dispatch(
+            addError({ errorMessage: "Contraseña incorrecta" })
+          );
+          throw error;
+        }
+        thunkAPI.dispatch(addError({ errorMessage: error.message }));
+        throw error;
+      });
+    return userData;
+  }
+);
+
 export const loginWithSocialMedia = createAsyncThunk(
   "user/loginWithProvider",
   async (providerId, thunkAPI) => {
@@ -21,10 +64,7 @@ export const loginWithSocialMedia = createAsyncThunk(
             if (data.get("role") === undefined) {
               await setDoc(docRef, {
                 role: "REGULAR",
-                shoppingCart: [],
-                wishlist: [],
-                paymentMethods: [],
-                addresses: [],
+                subscriptions: [],
               });
             }
             role = data.get("role");
@@ -40,6 +80,7 @@ export const loginWithSocialMedia = createAsyncThunk(
         };
       })
       .catch((error) => {
+        thunkAPI.dispatch(addError({ errorMessage: error.message }));
         throw error;
       });
 
@@ -56,6 +97,7 @@ export const authChangeHandler = createAsyncThunk(
       return new Promise((resolve, reject) => {
         onAuthStateChanged(auth, async (res) => {
           if (res === undefined || res === null) {
+            thunkAPI.dispatch(addError({ errorMessage: "Session closed" }));
             reject("Session closed");
           }
           const { uid, displayName, email, photoURL } = res;
@@ -104,18 +146,27 @@ const initialState = {
   userData: {},
   logged: false,
   isSubmitting: false,
-  error: {
-    isError: false,
-    message: "",
-  },
 };
 
 const options = {
   name: "user",
   initialState,
   extraReducers: {
+    //* Login with email
+    [loginWithEmail.pending]: (state) => {
+      state.isSubmitting = true;
+    },
+    [loginWithEmail.fulfilled]: (state, action) => {
+      state.userData = action.payload;
+
+      state.logged = true;
+      state.isSubmitting = false;
+    },
+    [loginWithEmail.rejected]: (state) => {
+      state.isSubmitting = false;
+    },
     //* Login with provider
-    [loginWithSocialMedia.pending]: (state, action) => {
+    [loginWithSocialMedia.pending]: (state) => {
       state.isSubmitting = true;
     },
     [loginWithSocialMedia.fulfilled]: (state, action) => {
@@ -124,14 +175,11 @@ const options = {
       state.logged = true;
       state.isSubmitting = false;
     },
-    [loginWithSocialMedia.rejected]: (state, action) => {
-      state.error.message = action.error.message;
-
+    [loginWithSocialMedia.rejected]: (state) => {
       state.isSubmitting = false;
-      state.error.isError = true;
     },
     //* Auth change handler
-    [authChangeHandler.pending]: (state, action) => {
+    [authChangeHandler.pending]: (state) => {
       state.isSubmitting = true;
     },
     [authChangeHandler.fulfilled]: (state, action) => {
@@ -140,26 +188,20 @@ const options = {
       state.logged = true;
       state.isSubmitting = false;
     },
-    [authChangeHandler.rejected]: (state, action) => {
-      state.error.message = action.error.message;
-
+    [authChangeHandler.rejected]: (state) => {
       state.isSubmitting = false;
-      state.error.isError = true;
     },
     //* logout
-    [logout.pending]: (state, action) => {
+    [logout.pending]: (state) => {
       state.isSubmitting = true;
     },
-    [logout.fulfilled]: (state, action) => {
+    [logout.fulfilled]: (state) => {
       state.isSubmitting = false;
       state.userData = {};
       state.logged = false;
     },
-    [logout.rejected]: (state, action) => {
-      state.error.message = action.error.message;
-
+    [logout.rejected]: (state) => {
       state.isSubmitting = false;
-      state.error.isError = true;
     },
   },
 };
@@ -168,10 +210,6 @@ const userSlice = createSlice(options);
 
 //* Selectors
 export const selectLoggedStatus = (state) => state.user.logged;
-
-export const selectErrorStatus = (state) => state.user.error.isError;
-
-export const selectErrorMessage = (state) => state.user.error.message;
 
 export const selectUserData = (state) => state.user.userData;
 
