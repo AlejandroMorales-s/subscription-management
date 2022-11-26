@@ -15,6 +15,7 @@ export default function SocialMedia() {
   
   useEffect(() => {
     if (loggedStatus) navigate('/feed')
+    // eslint-disable-next-line
   }, [loggedStatus])
 
   return (
