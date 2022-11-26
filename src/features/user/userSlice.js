@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 //* Firebase
 import {
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
@@ -45,6 +47,51 @@ export const loginWithEmail = createAsyncThunk(
         thunkAPI.dispatch(addError({ errorMessage: error.message }));
         throw error;
       });
+    return userData;
+  }
+);
+
+export const createAccountWithEmail = createAsyncThunk(
+  "user/signup",
+  async ({ email, password, name }, thunkAPI) => {
+    let userData = {};
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(async (result) => {
+        await updateProfile(result.user, {
+          displayName: name,
+        });
+        await setDoc(doc(database, "users", result.user.uid), {
+          role: "REGULAR",
+          subscriptions: [],
+        });
+        return {
+          uid: result.user.uid,
+          role: "REGULAR",
+        };
+      })
+      .then(({ uid, role }) => {
+        userData = {
+          displayName: name,
+          email,
+          uid,
+          photoURL: null,
+          role,
+        };
+      })
+      .catch((error) => {
+        if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+          thunkAPI.dispatch(
+            addError({
+              errorMessage: "El email ya está en uso. Intenta iniciar sesión",
+            })
+          );
+          throw error;
+        }
+        thunkAPI.dispatch(addError({ errorMessage: error.message }));
+        throw error;
+      });
+
     return userData;
   }
 );
@@ -163,6 +210,19 @@ const options = {
       state.isSubmitting = false;
     },
     [loginWithEmail.rejected]: (state) => {
+      state.isSubmitting = false;
+    },
+    //* Create account with email
+    [createAccountWithEmail.pending]: (state) => {
+      state.isSubmitting = true;
+    },
+    [createAccountWithEmail.fulfilled]: (state, action) => {
+      state.userData = action.payload;
+
+      state.logged = true;
+      state.isSubmitting = false;
+    },
+    [createAccountWithEmail.rejected]: (state) => {
       state.isSubmitting = false;
     },
     //* Login with provider
