@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import SocialMedia from '../components/forms/SocialMedia'
-import GenericForm from '../components/forms/GenericForm'
-import { useDispatch, useSelector } from 'react-redux'
-import { loginWithEmail } from '../features/user/userSlice'
-import Input from '../components/forms/Input'
 import Modal from '../components/Modal'
+import GenericForm from '../components/forms/GenericForm'
+import Input from '../components/forms/Input'
+import { useDispatch, useSelector } from 'react-redux'
 import { addError, removeError, selectErrorMessage, selectErrorStatus } from '../features/error/errorSlice'
+import { createAccountWithEmail } from '../features/user/userSlice'
 import { returnToInicialValuesModalInfo } from '../features/modal/modalSlice'
 import { useNavigate } from 'react-router-dom'
 
-export default function Login() {
+export default function SignUp() {
   const [invalidPassword, setInvalidPassword] = useState(false)
   const [invalidEmail, setInvalidEmail] = useState(false)
+  const [invalidName, setInvalidName] = useState(false)
 
   const errorStatus = useSelector(selectErrorStatus)
   const error = useSelector(selectErrorMessage)
@@ -23,9 +24,21 @@ export default function Login() {
     const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     return emailRegex.test(email) 
   }
-  
+
+  const verifyPassword = (password) => {
+    const passwordRegex = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
+    return passwordRegex.test(password) 
+  }
+
   const handleLogin = (data) => {
-    const {email, password} = data
+    const {email, password, name} = data
+    console.log(data) 
+
+    if (name === '') {
+      setInvalidName(true)
+      dispatch(addError({errorMessage: 'Proporciona un nombre válido'}))
+      return
+    } else {setInvalidName(false)}
     
     if (!verifyEmail(email) || email === '') {
       setInvalidEmail(true)
@@ -33,7 +46,7 @@ export default function Login() {
       return
     } else {setInvalidEmail(false)}
 
-    if (password === '') {
+    if (!verifyPassword(password)) {
       setInvalidPassword(true)
       dispatch(addError({errorMessage: 'Usa una contraseña válida'}))
       return
@@ -41,9 +54,8 @@ export default function Login() {
 
     dispatch(returnToInicialValuesModalInfo())
     dispatch(removeError())
-    dispatch(loginWithEmail(data))
+    dispatch(createAccountWithEmail(data))
   } 
-
   return (
     <>
       {errorStatus &&
@@ -57,15 +69,23 @@ export default function Login() {
           </div>
         </div>
         <div className='login-signup-form-container'>
-          <h2>Inicia Sesión</h2>
+          <h2>Regístrate</h2>
           <GenericForm 
-            buttonText={'Inicia Sesión'} 
+            buttonText={'Regístrate'} 
             initialValues={{
               email: '',
-              password: ''
+              password: '',
+              name: ''
             }}
             onSubmit={handleLogin}
           >
+            <Input 
+              label='Nombre' 
+              placeholder='John Doe' 
+              name='name' 
+              type='text'
+              className={invalidName ? 'invalid-input' : ''}
+            />
             <Input 
               label='Correo electrónico' 
               placeholder='example@example.com' 
@@ -81,7 +101,7 @@ export default function Login() {
               className={invalidPassword ? 'invalid-input' : ''}
             />
           </GenericForm>
-          <p onClick={() => navigate('/signup')} className='change-form-link'>No tienes cuenta? Regístrate ahora</p>
+          <p onClick={() => navigate('/')} className='change-form-link'>Ya tienes una cuenta? Inicia sesión</p>
           <SocialMedia/>
         </div>
       </div>
