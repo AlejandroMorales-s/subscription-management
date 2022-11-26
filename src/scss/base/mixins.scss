@@ -26,13 +26,13 @@
     color: $lightGray;
     font-weight: $semiBold;
     font-size: 1.6rem;
-    padding: calc($spacing / 4) calc($spacing / 2);
+    padding: 2rem 2rem;
     background-color: $primary;
-    border-radius: 1rem;
-    -webkit-border-radius: 1rem;
-    -moz-border-radius: 1rem;
-    -ms-border-radius: 1rem;
-    -o-border-radius: 1rem;
+    border-radius: 3rem;
+    -webkit-border-radius: 3rem;
+    -moz-border-radius: 3rem;
+    -ms-border-radius: 3rem;
+    -o-border-radius: 3rem;
     @include transition(all);
     &:hover{
         background-color: transparent;

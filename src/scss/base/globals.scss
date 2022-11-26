@@ -15,7 +15,7 @@ body{
 *, *:before, *:after{
     box-sizing: inherit;
 }
-@for $i from 1 through 4 {
+@for $i from 1 through 3 {
     h#{$i}{
         font-size: nth($fontSize, $i);
         margin: 0;
@@ -37,8 +37,9 @@ a, li{
     font-size: 1.4rem;
 }
 label{
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     font-weight: $medium;
+    color: $black;
 }
 ul{
     list-style: none;

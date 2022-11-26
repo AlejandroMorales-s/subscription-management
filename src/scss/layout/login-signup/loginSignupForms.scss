@@ -1,0 +1,42 @@
+.form-container{
+  min-height: 100vh;
+  max-height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  .logo-div{
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.form-logo-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: fit-content;
+  h1{
+    text-align: center;
+    span{
+      color: $primary;
+    }
+  }
+  .slogan{
+    text-align: center;
+    font-weight: $medium;
+  }
+}
+.login-signup-form-container{
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  h2{
+    text-align: center;
+  }
+  .change-form-link{
+    text-align: center;
+    font-weight: $medium;
+    color: $primary;
+  }
+}
