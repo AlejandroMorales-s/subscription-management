@@ -8,10 +8,15 @@ html{
     padding: 0;
     font-family: $font;
     color: $text;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
 }
 body{
     padding: 0 2rem;
     position: relative;
+    overflow-x: hidden;
 }
 *, *:before, *:after{
     box-sizing: inherit;
