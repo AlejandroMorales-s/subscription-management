@@ -1,0 +1,9 @@
+.services-type-filter-container{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  .services-type-filter-icon{
+    font-size: 2rem;
+    fill: $black;
+  }
+}
