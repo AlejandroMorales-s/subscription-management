@@ -17,9 +17,9 @@ export default function Header() {
   }, [])
 
   return (
-    <div className='header-container'>
+    <header className='header-container'>
       <h2>{currentTime}, {userInfo.displayName}</h2>
       <HamburgerMenu/>
-    </div>
+    </header>
   )
 }
