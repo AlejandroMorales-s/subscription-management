@@ -179,14 +179,11 @@ export const authChangeHandler = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "user/logout",
-  async (auth, thunkAPI) => {
-    await signOut(auth);
+export const logout = createAsyncThunk("user/logout", async (thunkAPI) => {
+  await signOut(auth);
 
-    return initialState;
-  }
-);
+  return initialState;
+});
 
 //* Creating store
 const initialState = {

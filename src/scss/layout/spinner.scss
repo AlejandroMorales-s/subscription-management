@@ -5,7 +5,7 @@
   animation: rotate4 2s linear infinite;
   circle {
    fill: none;
-   stroke: $primary;
+   stroke: $white;
    stroke-width: 4;
    stroke-dasharray: 1, 200;
    stroke-dashoffset: 0;
@@ -13,7 +13,6 @@
    animation: dash4 1.5s ease-in-out infinite;
   }
  }
- 
  
  @keyframes rotate4 {
   100% {

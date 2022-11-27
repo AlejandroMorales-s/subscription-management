@@ -21,23 +21,23 @@
     }
 }
 
-@mixin primary-btn {
-    border: 2.5px solid $primary;
-    color: $lightGray;
+@mixin primary-btn($color: $primary) {
+    color: $white;
     font-weight: $semiBold;
-    font-size: 1.6rem;
-    padding: 2rem 2rem;
-    background-color: $primary;
+    font-size: 1.4rem;
+    padding: 2rem;
+    background-color: $color;
     border-radius: 3rem;
     -webkit-border-radius: 3rem;
     -moz-border-radius: 3rem;
     -ms-border-radius: 3rem;
     -o-border-radius: 3rem;
-    @include transition(all);
-    &:hover{
-        background-color: transparent;
-        cursor: pointer;
-        color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{
+      color: $white; 
+      font-weight: $medium;
     }
 }
 
