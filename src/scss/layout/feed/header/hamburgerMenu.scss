@@ -1,0 +1,11 @@
+.hamburger-menu-container{
+  position: relative;
+  .hamburger-menu-icon{
+    font-size: 3rem;
+    fill: $black;
+  }
+}
+
+.hamburger-menu-active{
+  fill: $primary;
+}

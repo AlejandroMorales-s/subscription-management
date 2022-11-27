@@ -1,0 +1,13 @@
+.price-filter-container{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  p{
+    font-weight: $medium;
+    color: $black;
+  }
+  .price-filter-icon{
+    font-size: 2.5rem;
+    fill: $black;
+  }
+}
