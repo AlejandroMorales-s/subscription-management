@@ -2,8 +2,71 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  padding: 1rem 0;
   .services-type-filter-icon{
     font-size: 2rem;
     fill: $black;
+  }
+  .services-type-menu{
+    position: absolute;
+    top: 4rem;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    left: 0;
+    @include box-shadow;
+    width: 17.5rem;
+    display: none;
+    ul li{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 2rem 0;
+      border-radius: 1rem;
+      -webkit-border-radius: 1rem;
+      -moz-border-radius: 1rem;
+      -ms-border-radius: 1rem;
+      -o-border-radius: 1rem;
+    }
+    ul .option-selected{
+      background-color: rgba($color: $primary, $alpha: 0.2);
+      font-weight: $medium;
+      color: $black;
+    }
+  }
+}
+
+.menu-filter-type-open{
+  .services-type-filter-icon{
+    animation-name: rotateTypeFilterIcon;
+    animation-duration: 0.25s;
+    animation-fill-mode: forwards;
+  }
+  .services-type-menu{
+    display: block;
+    animation-name: openTypeMenu;
+    animation-duration: 0.25s;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes rotateTypeFilterIcon {
+  to{
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+  }
+}
+
+@keyframes openTypeMenu {
+  to{
+    padding: 1rem;
+    height: fit-content;
   }
 }
