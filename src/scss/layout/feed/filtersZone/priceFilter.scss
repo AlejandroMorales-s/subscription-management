@@ -2,12 +2,18 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  p{
-    font-weight: $medium;
-    color: $black;
+  div{
+    width: 6.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p{
+      font-weight: $medium;
+      color: $black;
+    }
   }
   .price-filter-icon{
     font-size: 2.5rem;
-    fill: $black;
   }
 }
