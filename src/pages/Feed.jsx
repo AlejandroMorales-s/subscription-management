@@ -6,7 +6,7 @@ import Header from '../components/feed/header/Header'
 export default function Feed() {
 
   return (
-    <div>
+    <div style={{paddingBottom: 3000,}}>
       <Header/>
       <Filters/>
       <AddServiceButton/>
