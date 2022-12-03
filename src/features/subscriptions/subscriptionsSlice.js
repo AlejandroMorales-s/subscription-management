@@ -6,7 +6,7 @@ import { addError } from "../error/errorSlice";
 const createId = () => Math.random().toString(16).slice(2);
 
 //* Async Thunks
-export const addNewSubscription = createAsyncThunk(
+export const createSubscription = createAsyncThunk(
   "subscription/addNewSubscription",
   async ({ uid, newSubscriptionData }, thunkAPI) => {
     if (!uid || !newSubscriptionData) {
@@ -14,7 +14,10 @@ export const addNewSubscription = createAsyncThunk(
       throw new Error("Información incompleta");
     }
 
-    newSubscriptionData.id = createId();
+    const newSubscriptionObject = {
+      id: createId(),
+      data: newSubscriptionData,
+    };
 
     const docRef = doc(database, "users", uid);
 
@@ -23,7 +26,7 @@ export const addNewSubscription = createAsyncThunk(
         const subscriptionsArray = res.get("subscriptions");
         setDoc(
           docRef,
-          { subscriptions: [...subscriptionsArray, newSubscriptionData] },
+          { subscriptions: [...subscriptionsArray, newSubscriptionObject] },
           { merge: true }
         );
       })
@@ -32,7 +35,49 @@ export const addNewSubscription = createAsyncThunk(
         throw error;
       });
 
-    return newSubscriptionData;
+    return newSubscriptionObject;
+  }
+);
+
+export const updateSubscription = createAsyncThunk(
+  "subscription/updateSubscription",
+  async ({ uid, subscriptionData }, thunkAPI) => {
+    const dataUpdatedObj = {};
+    let subscriptionsArrayUpdated;
+
+    for (const key in subscriptionData) {
+      dataUpdatedObj[key] = subscriptionData[key];
+    }
+
+    const docRef = doc(database, "users", uid);
+
+    await getDoc(docRef)
+      .then((res) => {
+        console.log(res.data());
+        const subsArrayFromDb = res.data().subscriptions;
+
+        let subToUpdate = subsArrayFromDb.find(
+          (sub) => sub.id === dataUpdatedObj.id
+        );
+
+        const subsArrayFiltered = subsArrayFromDb.filter(
+          (sub) => sub.id !== dataUpdatedObj.id
+        );
+
+        subToUpdate = dataUpdatedObj;
+
+        subsArrayFiltered.push(subToUpdate);
+
+        subscriptionsArrayUpdated = subsArrayFiltered;
+
+        setDoc(docRef, { subscriptions: subsArrayFiltered }, { merge: true });
+      })
+      .catch((error) => {
+        thunkAPI.dispatch(addError({ errorMessage: error.message }));
+        throw error;
+      });
+
+    return subscriptionsArrayUpdated;
   }
 );
 
@@ -75,15 +120,26 @@ const options = {
   initialState,
   reducers: {},
   extraReducers: {
-    //* Add a new subscription
-    [addNewSubscription.pending]: (state) => {
+    //* Create subscription
+    [createSubscription.pending]: (state) => {
       state.isLoading = true;
     },
-    [addNewSubscription.fulfilled]: (state, action) => {
+    [createSubscription.fulfilled]: (state, action) => {
       state.subscriptions.push(action.payload);
       state.isLoading = false;
     },
-    [addNewSubscription.rejected]: (state) => {
+    [createSubscription.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    //* Update subscription
+    [updateSubscription.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateSubscription.fulfilled]: (state, action) => {
+      state.subscriptions = action.payload;
+      state.isLoading = false;
+    },
+    [updateSubscription.rejected]: (state) => {
       state.isLoading = false;
     },
     //* Delete subscription
