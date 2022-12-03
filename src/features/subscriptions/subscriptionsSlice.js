@@ -39,6 +39,24 @@ export const createSubscription = createAsyncThunk(
   }
 );
 
+export const readUserSubscriptions = createAsyncThunk(
+  "subscriptions/readSubscriptions",
+  async (uid, thunkAPI) => {
+    const docRef = doc(database, "users", uid);
+    let subscriptions;
+
+    await getDoc(docRef)
+      .then((res) => {
+        subscriptions = res.data().subscriptions;
+      })
+      .catch((error) => {
+        thunkAPI.dispatch(addError({ errorMessage: error.message }));
+        throw error;
+      });
+    return subscriptions;
+  }
+);
+
 export const updateSubscription = createAsyncThunk(
   "subscription/updateSubscription",
   async ({ uid, subscriptionData }, thunkAPI) => {
@@ -53,7 +71,6 @@ export const updateSubscription = createAsyncThunk(
 
     await getDoc(docRef)
       .then((res) => {
-        console.log(res.data());
         const subsArrayFromDb = res.data().subscriptions;
 
         let subToUpdate = subsArrayFromDb.find(
@@ -129,6 +146,17 @@ const options = {
       state.isLoading = false;
     },
     [createSubscription.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    //* Read user's subscriptions
+    [readUserSubscriptions.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [readUserSubscriptions.fulfilled]: (state, action) => {
+      state.subscriptions = action.payload;
+      state.isLoading = false;
+    },
+    [readUserSubscriptions.rejected]: (state) => {
       state.isLoading = false;
     },
     //* Update subscription
