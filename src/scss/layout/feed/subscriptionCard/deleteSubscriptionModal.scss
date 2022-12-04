@@ -1,0 +1,42 @@
+.delete-sub-modal-container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  height: 100vh;
+  width: 100vw;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .delete-sub-modal{
+    background-color: $white;
+    padding: 2rem;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    width: 80%;
+    .delete-sub-modal-buttons-container{
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .delete-sub-modal-button{
+        background-color: transparent;
+        color: $primary;
+        font-weight: $medium;
+        &:last-of-type{
+          @include primary-btn($red);
+          border-radius: 1rem;
+          -webkit-border-radius: 1rem;
+          -moz-border-radius: 1rem;
+          -ms-border-radius: 1rem;
+          -o-border-radius: 1rem;
+          padding: 1.5rem 2rem;
+        }
+      }
+    }
+  }
+}
