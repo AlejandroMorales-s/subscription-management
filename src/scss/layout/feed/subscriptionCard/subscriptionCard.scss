@@ -1,0 +1,33 @@
+.subscriptions-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.subscription-card{
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 1.5rem;
+  -webkit-border-radius: 1.5rem;
+  -moz-border-radius: 1.5rem;
+  -ms-border-radius: 1.5rem;
+  -o-border-radius: 1.5rem;
+  h2, h3{color: $white;}
+  div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    .subscription-card-icon{
+      font-size: 2rem;
+      fill: white;
+    }
+  }
+}
+
+@each $color in $subsBgColors {
+  .#{$color} {
+    background-color: $color;
+  }
+}
