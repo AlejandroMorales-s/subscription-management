@@ -13,7 +13,6 @@
   -moz-border-radius: 1.5rem;
   -ms-border-radius: 1.5rem;
   -o-border-radius: 1.5rem;
-  h2, h3{color: $white;}
   .subscription-card-price-container{
     display: flex;
     align-items: center;
@@ -22,7 +21,6 @@
     position: relative;
     .subscription-card-icon{
       font-size: 2rem;
-      fill: white;
     }
     .subscription-card-menu{
       padding: 1rem;
@@ -51,7 +49,24 @@
 }
 
 @each $color in $subsBgColors {
-  .#{$color} {
-    background-color: $color;
+  @each $lighterColor in $lighterColors{
+    @if $color == $lighterColor {
+      .#{$color} {
+        background-color: $color;
+        h2, h3{color: $black;}
+        .subscription-card-price-container .subscription-card-icon{
+          fill: $black;
+        }
+      }
+    } @else {
+      .#{$color} {
+        background-color: $color;
+        h2, h3{color: $white;}
+        .subscription-card-price-container .subscription-card-icon{
+          fill: $white;
+        }
+      }
+
+    }
   }
 }
