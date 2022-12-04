@@ -186,4 +186,11 @@ const options = {
 
 const subscriptionsSlice = createSlice(options);
 
+//* Selectors
+export const selectUserSubscriptions = (state) =>
+  state.subscriptions.subscriptions;
+
+export const selectUserSubscriptionsLoading = (state) =>
+  state.subscriptions.isLoading;
+
 export default subscriptionsSlice.reducer;
