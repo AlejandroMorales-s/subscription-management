@@ -1,0 +1,73 @@
+.subscriptions-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.subscription-card{
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 1.5rem;
+  -webkit-border-radius: 1.5rem;
+  -moz-border-radius: 1.5rem;
+  -ms-border-radius: 1.5rem;
+  -o-border-radius: 1.5rem;
+  .subscription-card-price-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    .subscription-card-icon{
+      font-size: 2rem;
+    }
+    .subscription-card-menu{
+      padding: 1rem;
+      @include box-shadow;
+      background-color: $white;
+      border-radius: 1rem;
+      -webkit-border-radius: 1rem;
+      -moz-border-radius: 1rem;
+      -ms-border-radius: 1rem;
+      -o-border-radius: 1rem;
+      position: absolute;
+      top: 3.5rem;
+      right: 0;
+      width: 20rem;
+      z-index: 100;
+      ul{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        li{
+          padding: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@each $color in $subsBgColors {
+  @each $lighterColor in $lighterColors{
+    @if $color == $lighterColor {
+      .#{$color} {
+        background-color: $color;
+        h2, h3{color: $black;}
+        .subscription-card-price-container .subscription-card-icon{
+          fill: $black;
+        }
+      }
+    } @else {
+      .#{$color} {
+        background-color: $color;
+        h2, h3{color: $white;}
+        .subscription-card-price-container .subscription-card-icon{
+          fill: $white;
+        }
+      }
+
+    }
+  }
+}

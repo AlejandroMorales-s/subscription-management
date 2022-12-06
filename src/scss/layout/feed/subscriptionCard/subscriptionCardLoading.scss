@@ -1,0 +1,42 @@
+.subscription-card-loading{
+  background-color: rgba($color: $lightGray, $alpha: 0.5);
+  border-radius: 1.5rem;
+  -webkit-border-radius: 1.5rem;
+  -moz-border-radius: 1.5rem;
+  -ms-border-radius: 1.5rem;
+  -o-border-radius: 1.5rem;
+  padding: 3rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .subscription-card-loading-name{
+    background-color: $lightGray;
+    padding: 0.8rem 0;
+    width: 7rem;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+  }
+  .subscription-card-loading-price-container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    div{
+      background-color: $lightGray;
+      padding: 1rem 0;
+      width: 4rem;
+      border-radius: 0.5rem;
+      -webkit-border-radius: 0.5rem;
+      -moz-border-radius: 0.5rem;
+      -ms-border-radius: 0.5rem;
+      -o-border-radius: 0.5rem;
+    }
+    .subscription-card-loading-icon{
+      font-size: 2rem;
+      fill: $lightGray;
+    }
+  }
+}
