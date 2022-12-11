@@ -21,26 +21,33 @@ const options = {
       subscriptions.forEach((sub) => pricesArray.push(Number(sub.data.price)));
 
       state.priceFilter.totalAmount = pricesArray.reduce(
-        (accumulator, currentValue) => accumulator + currentValue
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
       );
     },
-    /*
     modifyPriceFilter: (state, action) => {
-      const { filterTypeName, filterTypeIndex, subscriptions } = action.payload;
-      
+      const { filterTypeName, filterTypeIndex } = action.payload;
+
       state.priceFilter.filterType = filterTypeName;
-      
+
       if (filterTypeIndex === 0) {
+        state.priceFilter.newTotalAmountToPayFiltered =
+          state.priceFilter.totalAmount / 4;
+      } else if (filterTypeIndex === 1) {
+        state.priceFilter.newTotalAmountToPayFiltered =
+          state.priceFilter.totalAmount;
+      } else {
+        state.priceFilter.newTotalAmountToPayFiltered =
+          state.priceFilter.totalAmount * 12;
       }
     },
-    */
   },
 };
 
 const filtersSlice = createSlice(options);
 
 //* Exporting reducers
-export const { setTotalAmountToPay } = filtersSlice.actions;
+export const { setTotalAmountToPay, modifyPriceFilter } = filtersSlice.actions;
 
 //* Selectors
 export const selectPriceFilterInfo = (state) => state.filters.priceFilter;
