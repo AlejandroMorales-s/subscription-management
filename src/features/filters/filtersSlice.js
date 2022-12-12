@@ -1,0 +1,57 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  priceFilter: {
+    filterType: "",
+    newTotalAmountToPayFiltered: 0,
+    totalAmount: 0,
+  },
+  subscriptionsFilter: {},
+};
+
+const options = {
+  name: "filters",
+  initialState,
+  reducers: {
+    setTotalAmountToPay: (state, action) => {
+      const subscriptions = action.payload;
+
+      const pricesArray = [];
+
+      subscriptions.forEach((sub) => pricesArray.push(Number(sub.data.price)));
+
+      state.priceFilter.totalAmount = pricesArray.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      );
+    },
+    modifyPriceFilter: (state, action) => {
+      const { filterTypeName, filterTypeIndex } = action.payload;
+
+      state.priceFilter.filterType = filterTypeName;
+
+      if (filterTypeIndex === 0) {
+        state.priceFilter.newTotalAmountToPayFiltered =
+          state.priceFilter.totalAmount / 4;
+      } else if (filterTypeIndex === 1) {
+        state.priceFilter.newTotalAmountToPayFiltered =
+          state.priceFilter.totalAmount;
+      } else {
+        state.priceFilter.newTotalAmountToPayFiltered =
+          state.priceFilter.totalAmount * 12;
+      }
+    },
+  },
+};
+
+const filtersSlice = createSlice(options);
+
+//* Exporting reducers
+export const { setTotalAmountToPay, modifyPriceFilter } = filtersSlice.actions;
+
+//* Selectors
+export const selectPriceFilterInfo = (state) => state.filters.priceFilter;
+export const selectSubscriptionsFilterInfo = (state) =>
+  state.filters.subscriptionsFilter;
+
+export default filtersSlice.reducer;
