@@ -6,18 +6,19 @@ import Filters from '../components/feed/filtersZone/Filters'
 import Header from '../components/feed/header/Header'
 import SubscriptionCard from '../components/feed/subscriptionCard/SubscriptionCard'
 import SubscriptionCardLoading from '../components/feed/subscriptionCard/SubscriptionCardLoading'
-import { readUserSubscriptions, selectUserSubscriptions, selectUserSubscriptionsLoading } from '../features/subscriptions/subscriptionsSlice'
+import { selectSubscriptionsFilterInfo } from '../features/filters/filtersSlice'
+import { readUserSubscriptions, selectUserSubscriptionsLoading } from '../features/subscriptions/subscriptionsSlice'
 import { selectUserData } from '../features/user/userSlice'
 
 export default function Feed() {
   const dispatch = useDispatch()
-  const uid = useSelector(selectUserData)
-  const subs = useSelector(selectUserSubscriptions)
+  const userData = useSelector(selectUserData)
+  const subs = useSelector(selectSubscriptionsFilterInfo)
   const subsLoading = useSelector(selectUserSubscriptionsLoading)
 
   useEffect(() => {
-    dispatch(readUserSubscriptions(uid.uid))
-  }, [uid])
+    dispatch(readUserSubscriptions(userData.uid))
+  }, [userData])
   
 
   return (
