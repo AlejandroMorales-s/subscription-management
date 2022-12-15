@@ -13,13 +13,12 @@ import { selectUserData } from '../features/user/userSlice'
 export default function Feed() {
   const dispatch = useDispatch()
   const userData = useSelector(selectUserData)
-  const subs = useSelector(selectSubscriptionsFilterInfo)
+  const subscriptionsFiltered = useSelector(selectSubscriptionsFilterInfo)
   const subsLoading = useSelector(selectUserSubscriptionsLoading)
 
   useEffect(() => {
     dispatch(readUserSubscriptions(userData.uid))
   }, [userData])
-  
 
   return (
     <div style={{minHeight: '100vh',}}>
@@ -27,7 +26,7 @@ export default function Feed() {
       <Filters/>
       <div className='subscriptions-container'>
         {subsLoading && <SubscriptionCardLoading/>}
-        {subs.map(sub => {
+        {subscriptionsFiltered.length !== undefined && subscriptionsFiltered.map(sub => {
           return (
             <SubscriptionCard key={sub.id} subscription={sub}/>
           )

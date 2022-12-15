@@ -8,12 +8,15 @@ export default function Header() {
 
   const userInfo = useSelector(selectUserData)
   
-  const actualHour = new Date()
+  const actualHour = new Date().getHours()
   
   useEffect(() => {
-      if(actualHour.getHours() >= 4 && actualHour.getHours() < 12) setCurrentTime('Buenos dias')
-      else if(actualHour.getHours() >= 12 && actualHour.getHours() < 20) setCurrentTime('Buenas tardes')
-      else setCurrentTime('Buenas noches')
+    if(actualHour >= 4 && actualHour < 12) 
+      setCurrentTime('Buenos días')
+    else if(actualHour >= 12 && actualHour < 20) 
+      setCurrentTime('Buenas tardes')
+    else 
+      setCurrentTime('Buenas noches')
   }, [])
 
   return (
