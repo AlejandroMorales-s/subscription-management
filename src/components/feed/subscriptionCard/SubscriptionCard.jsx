@@ -27,7 +27,7 @@ export default function SubscriptionCard({subscription}) {
       <div className={`subscription-card ${color}`}>
         <h3>{name}</h3>
         <div className='subscription-card-price-container'>
-          <h2>${priceController}</h2>
+          <h2>${priceController}</h2> 
           <BsThreeDotsVertical
             className='subscription-card-icon'
             onClick={() => setMenuOpen(!menuOpen)}
