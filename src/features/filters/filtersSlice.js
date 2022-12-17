@@ -41,13 +41,33 @@ const options = {
           state.priceFilter.totalAmount * 12;
       }
     },
+    subscriptionsFilter: (state, action) => {
+      const { subscriptions, filterIndex } = action.payload;
+
+      if (filterIndex === 0) {
+        state.subscriptionsFilter = subscriptions;
+      } else if (filterIndex === 1) {
+        const getPaidSubs = subscriptions.filter(
+          (sub) => sub.data.isPaid === true
+        );
+
+        state.subscriptionsFilter = getPaidSubs;
+      } else if (filterIndex === 2) {
+        const getUnpaidSubs = subscriptions.filter(
+          (sub) => sub.data.isPaid === false
+        );
+
+        state.subscriptionsFilter = getUnpaidSubs;
+      }
+    },
   },
 };
 
 const filtersSlice = createSlice(options);
 
 //* Exporting reducers
-export const { setTotalAmountToPay, modifyPriceFilter } = filtersSlice.actions;
+export const { setTotalAmountToPay, modifyPriceFilter, subscriptionsFilter } =
+  filtersSlice.actions;
 
 //* Selectors
 export const selectPriceFilterInfo = (state) => state.filters.priceFilter;

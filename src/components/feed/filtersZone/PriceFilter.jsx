@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
   modifyPriceFilter, 
   selectPriceFilterInfo, 
+  selectSubscriptionsFilterInfo, 
   setTotalAmountToPay 
 } from '../../../features/filters/filtersSlice'
-import { selectUserSubscriptions } from '../../../features/subscriptions/subscriptionsSlice'
 
 export default function PriceFilter() {
   let [optionSelectedIndex, setOptionSelectedIndex] = useState(1)
 
   const options = ['Semanal', 'Mensual', 'Anual']
-  const subscriptions = useSelector(selectUserSubscriptions)
+  const subscriptions = useSelector(selectSubscriptionsFilterInfo)
   const priceFilter = useSelector(selectPriceFilterInfo)
   const dispatch = useDispatch()
 
@@ -33,7 +33,9 @@ export default function PriceFilter() {
   }
   
   useEffect(() => {
-    dispatch(setTotalAmountToPay(subscriptions))
+    if (subscriptions.length)
+      dispatch(setTotalAmountToPay(subscriptions))
+    
     dispatch(modifyPriceFilter({
       filterTypeName: options[optionSelectedIndex],
       filterTypeIndex: optionSelectedIndex  
