@@ -16,7 +16,7 @@ export default function HamburgerMenu() {
   const handleMenuStatus = () => setMenuOpen(!menuOpen)
   const handleLogout = () => {
     dispatch(logout())
-    navigate('/')
+    .then(() => navigate('/'))
   }
 
   return (
