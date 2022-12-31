@@ -1,0 +1,90 @@
+.new-subscription-header-container{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 2rem;  
+  .add-new-sub-return-icon{
+    font-size: 2rem;
+    fill: $black;
+  }
+}
+.add-sub-form-container{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+
+  .new-sub-card-preview{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    gap: 2rem;
+    border-radius: 1.5rem;
+    -webkit-border-radius: 1.5rem;
+    -moz-border-radius: 1.5rem;
+    -ms-border-radius: 1.5rem;
+    -o-border-radius: 1.5rem;
+    .new-sub-card-preview-name,
+    .new-sub-card-preview-price{
+      background-color: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      font-size: 1.8rem;
+      font-weight: $medium;
+      padding: 0 2rem;
+      text-align: center;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
+
+  .color-picker-container{
+    display: flex; 
+    gap: 2rem;
+    align-items: center;
+    input[type="color" ]{
+      border: none;
+      height: 4rem;
+      width: 4rem;
+    }
+  }
+  
+  .type-of-payment-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    button{
+      @include secondary-btn;
+      padding: 1.5rem;
+    }
+    .active{
+      @include primary-btn;
+      @include transition(all);
+      padding: 1.5rem;
+    }
+  }
+
+  .date-of-subscription{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    input[type="date"]{
+      height: 3.5rem;
+      padding: 0 1rem;
+      font-size: 1.4rem;
+      color: $black;
+      font-weight: $medium;
+    }
+  }
+  
+  .submit-button{
+    @include primary-btn;
+    width: 100%;
+  }
+}

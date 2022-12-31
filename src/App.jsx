@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { authChangeHandler } from './features/user/userSlice';
 import { auth } from './libs/firebase';
+import AddNewSubscription from './pages/AddNewSubscription';
 
 function App() {
   const dispatch = useDispatch()
@@ -41,6 +42,7 @@ function App() {
       <Route path='/' element={<Login/>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/feed' element={<Feed/>}/>
+      <Route path='/add-subscription' element={<AddNewSubscription/>}/>
     </Routes>
   );
 }

@@ -137,15 +137,15 @@ export const loginWithSocialMedia = createAsyncThunk(
 
 export const authChangeHandler = createAsyncThunk(
   "user/handlerAuthChange",
-  async (auth, thunkAPI) => {
+  async (auth) => {
     let userData = {};
 
     const authHandler = async (auth) => {
       return new Promise((resolve, reject) => {
         onAuthStateChanged(auth, async (res) => {
           if (res === undefined || res === null) {
-            thunkAPI.dispatch(addError({ errorMessage: "Session closed" }));
             reject("Session closed");
+            return;
           }
           const { uid, displayName, email, photoURL } = res;
           let role = "";
@@ -188,6 +188,8 @@ export const logout = createAsyncThunk("user/logout", async (thunkAPI) => {
 //* Creating store
 const initialState = {
   userData: {},
+  //userData: { uid: "5c4d1NHJiTanFTVKfMDZgB0o0Xs2" },
+  //userData: { uid: "sIM3sWMz8JMT5We6XTb18TtNBFg2" },
   logged: false,
   isSubmitting: false,
 };

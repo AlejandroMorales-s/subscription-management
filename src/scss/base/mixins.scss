@@ -45,21 +45,14 @@
     border: 2px solid $primary;
     color: $primary;
     font-weight: $semiBold;
-    padding: calc($spacing/ 4) calc($spacing/ 2);
+    padding: 2rem;
     background-color: transparent;
-    border-radius: 0.5rem;
-    -webkit-border-radius: 0.5rem;
-    -moz-border-radius: 0.5rem;
-    -ms-border-radius: 0.5rem;
-    -o-border-radius: 0.5rem;
-    font-size: 1.8rem;
+    border-radius: 3rem;
+    -webkit-border-radius: 3rem;
+    -moz-border-radius: 3rem;
+    -ms-border-radius: 3rem;
+    -o-border-radius: 3rem;
     max-width: fit-content;
-    @include transition(all);
-    &:hover{
-        background-color: $primary;
-        cursor: pointer;
-        color: $lightGray;
-    }
 }
 
 @mixin transition($value) {

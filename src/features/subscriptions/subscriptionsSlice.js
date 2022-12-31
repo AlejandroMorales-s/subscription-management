@@ -14,8 +14,6 @@ export const createSubscription = createAsyncThunk(
       throw new Error("Información incompleta");
     }
 
-    newSubscriptionData.isPaid = false;
-
     const newSubscriptionObject = {
       id: createId(),
       data: newSubscriptionData,

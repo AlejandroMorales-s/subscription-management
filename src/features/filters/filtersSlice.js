@@ -56,7 +56,6 @@ const options = {
         const getUnpaidSubs = subscriptions.filter(
           (sub) => sub.data.isPaid === false
         );
-
         state.subscriptionsFilter = getUnpaidSubs;
       }
     },

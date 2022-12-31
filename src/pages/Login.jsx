@@ -81,7 +81,12 @@ export default function Login() {
               className={invalidPassword ? 'invalid-input' : ''}
             />
           </GenericForm>
-          <p onClick={() => navigate('/signup')} className='change-form-link'>No tienes cuenta? Regístrate ahora</p>
+          <p 
+            onClick={() => navigate('/signup')} 
+            className='change-form-link'
+          >
+            No tienes cuenta? Regístrate ahora
+          </p>
           <SocialMedia/>
         </div>
       </div>
