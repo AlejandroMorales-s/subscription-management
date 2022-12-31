@@ -48,26 +48,3 @@
     }
   }
 }
-
-@each $color in $subsBgColors {
-  @each $lighterColor in $lighterColors{
-    @if $color == $lighterColor {
-      .#{$color} {
-        background-color: $color;
-        h2, h3{color: $black;}
-        .subscription-card-price-container .subscription-card-icon{
-          fill: $black;
-        }
-      }
-    } @else {
-      .#{$color} {
-        background-color: $color;
-        h2, h3{color: $white;}
-        .subscription-card-price-container .subscription-card-icon{
-          fill: $white;
-        }
-      }
-
-    }
-  }
-}
