@@ -37,7 +37,7 @@ export default function SubscriptionCard({subscription}) {
       >
         <h3 style={{color: textColor}}>{name}</h3>
         <div className='subscription-card-price-container'>
-          <h2 style={{color: textColor}}>${priceController}</h2> 
+          <h2 style={{color: textColor}}>${priceController.toLocaleString()}</h2> 
           <BsThreeDotsVertical
             style={{fill: textColor}}
             className='subscription-card-icon'

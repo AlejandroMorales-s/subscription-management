@@ -47,7 +47,7 @@ export default function PriceFilter() {
     <div onClick={handlePriceFilter} className='price-filter-container'>
       <div>
         <p>{priceFilter.filterType}</p>
-        <h2>${priceFilter.newTotalAmountToPayFiltered}</h2>
+        <h2>${priceFilter.newTotalAmountToPayFiltered.toLocaleString()}</h2>
       </div>
       <CgArrowsV className='price-filter-icon'/>
     </div>
