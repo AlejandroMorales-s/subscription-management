@@ -72,13 +72,15 @@
 
   .date-of-subscription{
     display: flex;
-    flex-direction: column;
     gap: 2rem;
+    align-items: center;
     input[type="date"]{
       height: 3.5rem;
       padding: 0 1rem;
       font-size: 1.4rem;
       color: $black;
+      width: 100%;
+      max-width: 15rem;
       font-weight: $medium;
     }
   }

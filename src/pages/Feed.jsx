@@ -21,7 +21,7 @@ export default function Feed() {
   }, [userData])
 
   return (
-    <div style={{minHeight: '100vh',}}>
+    <div style={{minHeight: '100vh', paddingBottom: '12.5rem'}}>
       <Header/>
       <Filters/>
       <div className='subscriptions-container'>

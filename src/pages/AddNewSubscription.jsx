@@ -147,7 +147,7 @@ export default function AddNewSubscription() {
           </button>
         </div>
         <div className='date-of-subscription'>
-          <label htmlFor="sub-date">Fecha de inicio de la suscripción</label>
+          <label htmlFor="sub-date">Fecha de inicio:</label>
           <input 
             type="date" 
             name="sub-date"
