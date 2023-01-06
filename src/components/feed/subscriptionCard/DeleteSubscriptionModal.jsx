@@ -24,7 +24,8 @@ export default function DeleteSubscriptionModal({subscription, modalOpen}) {
             className='delete-sub-modal-button'
             onClick={() => dispatch(deleteSubscription({
               uid: userId.uid,
-              subscriptionId: subscription.id
+              subscriptionId: subscription.id,
+              subscriptionName: name
             }))}
           >
             Eliminar

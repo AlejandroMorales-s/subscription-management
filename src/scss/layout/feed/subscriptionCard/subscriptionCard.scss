@@ -3,6 +3,49 @@
   flex-direction: column;
   gap: 2rem;
 }
+.subscription-card-container{
+  min-width: 100%;
+  width: fit-content;
+  border-radius: 1.5rem;
+  -webkit-border-radius: 1.5rem;
+  -moz-border-radius: 1.5rem;
+  -ms-border-radius: 1.5rem;
+  -o-border-radius: 1.5rem; 
+  overflow: hidden; 
+  position: relative;
+  height: fit-content;
+  .sub-bg-icon-container{
+    position: absolute;
+    height: 100%;
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    gap: 1rem;
+    .sub-bg-icon{
+      font-size: 3rem;
+      fill: $white;
+    }
+    .sub-icon-text{
+      font-weight: $medium;
+      color: $white;
+    }
+  }
+}
+
+.deleting-subscription{
+  background-color: $red;
+  .sub-bg-icon-container{
+    right: 0;
+  }
+}
+.editing-subscription{
+  background-color: $green;
+  .sub-bg-icon-container{
+    left: 0;
+  }
+}
 .subscription-card{
   padding: 3rem 2rem;
   display: flex;
@@ -13,38 +56,7 @@
   -moz-border-radius: 1.5rem;
   -ms-border-radius: 1.5rem;
   -o-border-radius: 1.5rem;
-  .subscription-card-price-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    position: relative;
-    .subscription-card-icon{
-      font-size: 2rem;
-    }
-    .subscription-card-menu{
-      padding: 1rem;
-      @include box-shadow;
-      background-color: $white;
-      border-radius: 1rem;
-      -webkit-border-radius: 1rem;
-      -moz-border-radius: 1rem;
-      -ms-border-radius: 1rem;
-      -o-border-radius: 1rem;
-      position: absolute;
-      top: 3.5rem;
-      right: 0;
-      width: 20rem;
-      z-index: 100;
-      ul{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        li{
-          padding: 1rem;
-        }
-      }
-    }
-  }
+  box-shadow: 10px 0px 60px 20px rgba(0,0,0,0.65);
+  width: 100%;
+  z-index: 10;
 }

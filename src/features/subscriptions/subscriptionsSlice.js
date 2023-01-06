@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "../../libs/firebase";
 import { addError } from "../error/errorSlice";
+import { modifyModalInfo } from "../modal/modalSlice";
 
 const createId = () => Math.random().toString(16).slice(2);
 
@@ -100,7 +101,7 @@ export const updateSubscription = createAsyncThunk(
 
 export const deleteSubscription = createAsyncThunk(
   "subscription/deleteSubscription",
-  async ({ uid, subscriptionId }, thunkAPI) => {
+  async ({ uid, subscriptionId, subscriptionName }, thunkAPI) => {
     if (!uid || !subscriptionId) {
       thunkAPI.dispatch(addError({ errorMessage: "Información incompleta" }));
       throw new Error("Información incompleta");
@@ -117,6 +118,14 @@ export const deleteSubscription = createAsyncThunk(
         subsFiltered = subsArray.filter((sub) => sub.id !== subscriptionId);
 
         setDoc(docRef, { subscriptions: subsFiltered }, { merge: true });
+
+        thunkAPI.dispatch(
+          modifyModalInfo({
+            modalActive: true,
+            modalMessage: `Suscripción ${subscriptionName} eliminada correctamente`,
+            modalType: "success",
+          })
+        );
       })
       .catch((error) => {
         thunkAPI.dispatch(addError({ errorMessage: error.message }));
