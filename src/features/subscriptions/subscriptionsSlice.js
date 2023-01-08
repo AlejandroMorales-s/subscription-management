@@ -1,18 +1,18 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { database } from "../../libs/firebase";
-import { addError } from "../error/errorSlice";
-import { modifyModalInfo } from "../modal/modalSlice";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { database } from '../../libs/firebase';
+import { addError } from '../error/errorSlice';
+import { modifyModalInfo } from '../modal/modalSlice';
 
 const createId = () => Math.random().toString(16).slice(2);
 
 //* Async Thunks
 export const createSubscription = createAsyncThunk(
-  "subscription/addNewSubscription",
+  'subscription/addNewSubscription',
   async ({ uid, newSubscriptionData }, thunkAPI) => {
     if (!uid || !newSubscriptionData) {
-      thunkAPI.dispatch(addError({ errorMessage: "Información incompleta" }));
-      throw new Error("Información incompleta");
+      thunkAPI.dispatch(addError({ errorMessage: 'Información incompleta' }));
+      throw new Error('Información incompleta');
     }
 
     const newSubscriptionObject = {
@@ -20,11 +20,11 @@ export const createSubscription = createAsyncThunk(
       data: newSubscriptionData,
     };
 
-    const docRef = doc(database, "users", uid);
+    const docRef = doc(database, 'users', uid);
 
     await getDoc(docRef)
       .then((res) => {
-        const subscriptionsArray = res.get("subscriptions");
+        const subscriptionsArray = res.get('subscriptions');
         setDoc(
           docRef,
           { subscriptions: [...subscriptionsArray, newSubscriptionObject] },
@@ -41,9 +41,9 @@ export const createSubscription = createAsyncThunk(
 );
 
 export const readUserSubscriptions = createAsyncThunk(
-  "subscriptions/readSubscriptions",
+  'subscriptions/readSubscriptions',
   async (uid, thunkAPI) => {
-    const docRef = doc(database, "users", uid);
+    const docRef = doc(database, 'users', uid);
     let subscriptions;
 
     await getDoc(docRef)
@@ -59,30 +59,25 @@ export const readUserSubscriptions = createAsyncThunk(
 );
 
 export const updateSubscription = createAsyncThunk(
-  "subscription/updateSubscription",
+  'subscription/updateSubscription',
   async ({ uid, subscriptionData }, thunkAPI) => {
-    const dataUpdatedObj = {};
     let subscriptionsArrayUpdated;
 
-    for (const key in subscriptionData) {
-      dataUpdatedObj[key] = subscriptionData[key];
-    }
-
-    const docRef = doc(database, "users", uid);
+    const docRef = doc(database, 'users', uid);
 
     await getDoc(docRef)
       .then((res) => {
         const subsArrayFromDb = res.data().subscriptions;
 
         let subToUpdate = subsArrayFromDb.find(
-          (sub) => sub.id === dataUpdatedObj.id
+          (sub) => sub.id === subscriptionData.id
         );
 
         const subsArrayFiltered = subsArrayFromDb.filter(
-          (sub) => sub.id !== dataUpdatedObj.id
+          (sub) => sub.id !== subscriptionData.id
         );
 
-        subToUpdate = dataUpdatedObj;
+        subToUpdate = subscriptionData;
 
         subsArrayFiltered.push(subToUpdate);
 
@@ -100,20 +95,20 @@ export const updateSubscription = createAsyncThunk(
 );
 
 export const deleteSubscription = createAsyncThunk(
-  "subscription/deleteSubscription",
+  'subscription/deleteSubscription',
   async ({ uid, subscriptionId, subscriptionName }, thunkAPI) => {
     if (!uid || !subscriptionId) {
-      thunkAPI.dispatch(addError({ errorMessage: "Información incompleta" }));
-      throw new Error("Información incompleta");
+      thunkAPI.dispatch(addError({ errorMessage: 'Información incompleta' }));
+      throw new Error('Información incompleta');
     }
 
-    const docRef = doc(database, "users", uid);
+    const docRef = doc(database, 'users', uid);
 
     let subsFiltered;
 
     await getDoc(docRef)
       .then((res) => {
-        const subsArray = res.get("subscriptions");
+        const subsArray = res.get('subscriptions');
 
         subsFiltered = subsArray.filter((sub) => sub.id !== subscriptionId);
 
@@ -123,7 +118,7 @@ export const deleteSubscription = createAsyncThunk(
           modifyModalInfo({
             modalActive: true,
             modalMessage: `Suscripción ${subscriptionName} eliminada correctamente`,
-            modalType: "success",
+            modalType: 'success',
           })
         );
       })
@@ -142,7 +137,7 @@ const initialState = {
 };
 
 const options = {
-  name: "subscriptions",
+  name: 'subscriptions',
   initialState,
   reducers: {},
   extraReducers: {
