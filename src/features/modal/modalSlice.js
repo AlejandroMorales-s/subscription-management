@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   modalActive: false,
-  modalMessage: "",
-  modalType: "",
+  modalMessage: '',
+  modalType: '',
 };
 
 const options = {
-  name: "modal",
+  name: 'modal',
   initialState,
   reducers: {
     showModal: (state) => {

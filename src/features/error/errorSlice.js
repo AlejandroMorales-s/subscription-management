@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isError: false,
-  errorMessage: "",
+  errorMessage: '',
 };
 
 const options = {
-  name: "errors",
+  name: 'errors',
   initialState,
   reducers: {
     addError: (state, action) => {
@@ -17,7 +17,7 @@ const options = {
     },
     removeError: (state) => {
       state.isError = false;
-      state.errorMessage = "";
+      state.errorMessage = '';
     },
   },
 };

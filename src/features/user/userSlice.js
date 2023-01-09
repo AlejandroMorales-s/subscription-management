@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 //* Firebase
 import {
   signInWithEmailAndPassword,
@@ -6,27 +6,27 @@ import {
   updateProfile,
   onAuthStateChanged,
   signOut,
-} from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { database } from "../../libs/firebase";
-import { providerLogin } from "../../libs/auth";
-import { auth } from "../../libs/firebase";
-import { addError } from "../error/errorSlice";
+} from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { database } from '../../libs/firebase';
+import { providerLogin } from '../../libs/auth';
+import { auth } from '../../libs/firebase';
+import { addError } from '../error/errorSlice';
 
 //* Async thunks
 export const loginWithEmail = createAsyncThunk(
-  "user/login",
+  'user/login',
   async ({ password, email }, thunkAPI) => {
     let userData = {};
     await signInWithEmailAndPassword(auth, email, password)
       .then(async (res) => {
         const { displayName, email, uid, photoURL } = res.user;
-        let role = "";
+        let role = '';
 
-        const docRef = doc(database, "users", uid);
+        const docRef = doc(database, 'users', uid);
 
         await getDoc(docRef)
-          .then((data) => (role = data.get("role")))
+          .then((data) => (role = data.get('role')))
           .catch((error) => console.log(error));
 
         userData = {
@@ -38,9 +38,9 @@ export const loginWithEmail = createAsyncThunk(
         };
       })
       .catch((error) => {
-        if (error.message === "Firebase: Error (auth/wrong-password).") {
+        if (error.message === 'Firebase: Error (auth/wrong-password).') {
           thunkAPI.dispatch(
-            addError({ errorMessage: "Contraseña incorrecta" })
+            addError({ errorMessage: 'Contraseña incorrecta' })
           );
           throw error;
         }
@@ -52,7 +52,7 @@ export const loginWithEmail = createAsyncThunk(
 );
 
 export const createAccountWithEmail = createAsyncThunk(
-  "user/signup",
+  'user/signup',
   async ({ email, password, name }, thunkAPI) => {
     let userData = {};
 
@@ -61,13 +61,13 @@ export const createAccountWithEmail = createAsyncThunk(
         await updateProfile(result.user, {
           displayName: name,
         });
-        await setDoc(doc(database, "users", result.user.uid), {
-          role: "REGULAR",
+        await setDoc(doc(database, 'users', result.user.uid), {
+          role: 'REGULAR',
           subscriptions: [],
         });
         return {
           uid: result.user.uid,
-          role: "REGULAR",
+          role: 'REGULAR',
         };
       })
       .then(({ uid, role }) => {
@@ -80,10 +80,10 @@ export const createAccountWithEmail = createAsyncThunk(
         };
       })
       .catch((error) => {
-        if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+        if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
           thunkAPI.dispatch(
             addError({
-              errorMessage: "El email ya está en uso. Intenta iniciar sesión",
+              errorMessage: 'El email ya está en uso. Intenta iniciar sesión',
             })
           );
           throw error;
@@ -97,24 +97,24 @@ export const createAccountWithEmail = createAsyncThunk(
 );
 
 export const loginWithSocialMedia = createAsyncThunk(
-  "user/loginWithProvider",
+  'user/loginWithProvider',
   async (providerId, thunkAPI) => {
     let userData = {};
 
     await providerLogin(providerId)
       .then(async (res) => {
         const { displayName, email, photoURL, uid } = res.user;
-        let role = "";
-        const docRef = doc(database, "users", uid);
+        let role = '';
+        const docRef = doc(database, 'users', uid);
         await getDoc(docRef)
           .then(async (data) => {
-            if (data.get("role") === undefined) {
+            if (data.get('role') === undefined) {
               await setDoc(docRef, {
-                role: "REGULAR",
+                role: 'REGULAR',
                 subscriptions: [],
               });
             }
-            role = data.get("role");
+            role = data.get('role');
           })
           .catch((error) => console.log(error));
 
@@ -136,7 +136,7 @@ export const loginWithSocialMedia = createAsyncThunk(
 );
 
 export const authChangeHandler = createAsyncThunk(
-  "user/handlerAuthChange",
+  'user/handlerAuthChange',
   async (auth) => {
     let userData = {};
 
@@ -144,16 +144,16 @@ export const authChangeHandler = createAsyncThunk(
       return new Promise((resolve, reject) => {
         onAuthStateChanged(auth, async (res) => {
           if (res === undefined || res === null) {
-            reject("Session closed");
+            reject('Session closed');
             return;
           }
           const { uid, displayName, email, photoURL } = res;
-          let role = "";
+          let role = '';
 
-          const docRef = doc(database, "users", uid);
+          const docRef = doc(database, 'users', uid);
 
           await getDoc(docRef)
-            .then((data) => (role = data.get("role")))
+            .then((data) => (role = data.get('role')))
             .catch((error) => console.log(error));
 
           resolve({
@@ -179,7 +179,7 @@ export const authChangeHandler = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("user/logout", async (thunkAPI) => {
+export const logout = createAsyncThunk('user/logout', async (thunkAPI) => {
   await signOut(auth);
 
   return initialState;
@@ -193,7 +193,7 @@ const initialState = {
 };
 
 const options = {
-  name: "user",
+  name: 'user',
   initialState,
   extraReducers: {
     //* Login with email

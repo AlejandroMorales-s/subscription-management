@@ -1,12 +1,12 @@
-import React from 'react'
-import PriceFilter from './PriceFilter'
-import ServicesTypeFilter from './ServicesTypeFilter'
+import React from 'react';
+import PriceFilter from './PriceFilter';
+import ServicesTypeFilter from './ServicesTypeFilter';
 
 export default function Filters() {
   return (
     <div className='filters-container'>
-      <ServicesTypeFilter/>
-      <PriceFilter/>
+      <ServicesTypeFilter />
+      <PriceFilter />
     </div>
-  )
+  );
 }

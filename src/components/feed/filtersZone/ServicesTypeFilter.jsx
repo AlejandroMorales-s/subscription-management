@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
+//* Icons
 import { IoIosArrowDown } from 'react-icons/io';
+//* React Redux
 import { useDispatch, useSelector } from 'react-redux';
+//* Redux slices
 import { subscriptionsFilter } from '../../../features/filters/filtersSlice';
 import { selectUserSubscriptions } from '../../../features/subscriptions/subscriptionsSlice';
 
 export default function ServicesTypeFilter() {
+  //* States
   const [menuOpen, setMenuOpen] = useState(false);
   const [indexOptionActive, setIndexOptionActive] = useState(0);
 
+  //* Dispatch
   const dispatch = useDispatch();
 
+  //* Selectors
   const subscriptions = useSelector(selectUserSubscriptions);
 
+  //* Options
   const options = ['Todos los servicios', 'Pagados', 'Por pagar'];
 
-  const handleMenu = () => setMenuOpen(!menuOpen);
-  const handleMenuOption = (e) =>
-    setIndexOptionActive(options.indexOf(e.target.innerHTML));
-
+  //* Use effect
   useEffect(() => {
     dispatch(
       subscriptionsFilter({
@@ -29,7 +33,7 @@ export default function ServicesTypeFilter() {
 
   return (
     <div
-      onClick={handleMenu}
+      onClick={() => setMenuOpen(!menuOpen)}
       className={`services-type-filter-container ${
         menuOpen ? 'menu-filter-type-open' : ''
       }`}
@@ -44,7 +48,9 @@ export default function ServicesTypeFilter() {
                 className={`${
                   indexOptionActive === index ? 'option-selected' : ''
                 }`}
-                onClick={handleMenuOption}
+                onClick={(e) =>
+                  setIndexOptionActive(options.indexOf(e.target.innerHTML))
+                }
                 key={index}
               >
                 {option}

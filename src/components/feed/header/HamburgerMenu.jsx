@@ -1,28 +1,40 @@
-import React, { useState } from 'react'
-import {BiMenu} from 'react-icons/bi'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { logout, selectIsSubmitting } from '../../../features/user/userSlice'
-import Spinner from '../../Spinner'
+import React, { useState } from 'react';
+//* Icons
+import { BiMenu } from 'react-icons/bi';
+//* React Redux
+import { useDispatch, useSelector } from 'react-redux';
+//* React Router
+import { useNavigate } from 'react-router-dom';
+//* User slice
+import { logout, selectIsSubmitting } from '../../../features/user/userSlice';
+//* Components
+import Spinner from '../../Spinner';
 
 export default function HamburgerMenu() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  //* States
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  //* Dispatch
+  const dispatch = useDispatch();
 
-  const selectIsLoading = useSelector(selectIsSubmitting)
+  //* Use navigate
+  const navigate = useNavigate();
 
-  const handleMenuStatus = () => setMenuOpen(!menuOpen)
-  const handleLogout = () => {
-    dispatch(logout())
-    .then(() => navigate('/'))
-  }
+  //* Selectors
+  const selectIsLoading = useSelector(selectIsSubmitting);
+
+  //* Handle logout
+  const handleLogout = () => dispatch(logout()).then(() => navigate('/'));
 
   return (
     <div className='hamburger-menu-container'>
-      <BiMenu onClick={handleMenuStatus} className={`hamburger-menu-icon ${menuOpen && 'hamburger-menu-active'}`}/>
-      <nav className={`hamburger-menu ${menuOpen ? 'menu-open' : 'menu-closed'}`}>
+      <BiMenu
+        onClick={() => setMenuOpen(!menuOpen)}
+        className={`hamburger-menu-icon ${menuOpen && 'hamburger-menu-active'}`}
+      />
+      <nav
+        className={`hamburger-menu ${menuOpen ? 'menu-open' : 'menu-closed'}`}
+      >
         <ul>
           <li>
             <p>Cuenta</p>
@@ -31,14 +43,10 @@ export default function HamburgerMenu() {
             <p>Métodos de pago</p>
           </li>
           <li onClick={handleLogout}>
-            {selectIsLoading ? 
-              <Spinner/>
-            :
-              <p>Cerrar sesión</p>
-            }
+            {selectIsLoading ? <Spinner /> : <p>Cerrar sesión</p>}
           </li>
         </ul>
       </nav>
     </div>
-  )
+  );
 }

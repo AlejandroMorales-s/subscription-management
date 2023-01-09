@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   priceFilter: {
-    filterType: "",
+    filterType: '',
     newTotalAmountToPayFiltered: 0,
     totalAmount: 0,
   },
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const options = {
-  name: "filters",
+  name: 'filters',
   initialState,
   reducers: {
     setTotalAmountToPay: (state, action) => {

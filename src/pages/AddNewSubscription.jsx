@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+//* Icons
 import { IoIosArrowBack } from 'react-icons/io';
+//* React redux
 import { useDispatch, useSelector } from 'react-redux';
+//* React router
 import { useNavigate, useParams } from 'react-router-dom';
+//* Components
 import Modal from '../components/Modal';
+//* Redux slices
 import {
   addError,
   selectErrorMessage,
@@ -14,6 +19,7 @@ import {
   updateSubscription,
 } from '../features/subscriptions/subscriptionsSlice';
 import { selectUserData } from '../features/user/userSlice';
+//* Custom function
 import getContrast from '../utils/getContrastBetweenTwoColors';
 
 export default function AddNewSubscription() {
