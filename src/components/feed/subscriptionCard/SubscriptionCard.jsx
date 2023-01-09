@@ -2,48 +2,94 @@ import React, { useEffect, useState, useRef } from 'react';
 import Draggable from 'react-draggable';
 //* Icons
 import { AiFillDelete } from 'react-icons/ai';
-import { MdPaid } from 'react-icons/md';
+import { MdPaid, MdOutlineMoneyOffCsred } from 'react-icons/md';
 //* Redux
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, useNavigate } from 'react-router-dom';
 //* Selectors
 import { selectPriceFilterInfo } from '../../../features/filters/filtersSlice';
+import { modifyModalInfo } from '../../../features/modal/modalSlice';
+import { updateSubscription } from '../../../features/subscriptions/subscriptionsSlice';
+import { selectUserData } from '../../../features/user/userSlice';
 //* Custom function
 import getContrast from '../../../utils/getContrastBetweenTwoColors';
 //* Components
 import DeleteSubscriptionModal from './DeleteSubscriptionModal';
 
 export default function SubscriptionCard({ subscription }) {
-  const { name, price, color } = subscription.data;
+  const { name, price, color, isPaid } = subscription.data;
 
   //* States
   const [deleteSubModal, setDeleteSubModal] = useState(false);
   const [priceController, setPriceController] = useState(price);
   const [textColor, setTextColor] = useState('#000000');
   const [draggingMode, setDraggingMode] = useState('');
+  const [cardDistanceDragged, setCardDistanceDragged] = useState(0);
 
   //* Refs
   const subscriptionCardRef = useRef(null);
   const subscriptionCardContainerRef = useRef(null);
 
-  //* Handle dragged card action
-  const handleDraggedCard = (e, data) => {
-    const draggedDistance = data.x;
+  //* Dispatch
+  const dispatch = useDispatch();
 
-    if (draggedDistance > 140) console.log('pagada');
-    else if (draggedDistance < -140) setDeleteSubModal(!deleteSubModal);
+  //* Selectors
+  const filterInfo = useSelector(selectPriceFilterInfo);
+  const userData = useSelector(selectUserData);
+
+  //* Handle dragged card
+  const handleDraggedCard = () => {
+    let subInfoUpdated = {
+      id: subscription.id,
+      data: {
+        ...subscription.data,
+      },
+    };
+
+    const dispatchInfo = (isPaidStatus) => {
+      subInfoUpdated.data.isPaid = isPaidStatus;
+      dispatch(
+        updateSubscription({
+          uid: userData.uid,
+          subscriptionData: subInfoUpdated,
+        })
+      );
+      dispatch(
+        modifyModalInfo({
+          modalActive: true,
+          modalMessage: `${name} marcada como ${
+            isPaidStatus ? 'pagada' : 'no pagada'
+          } exitosamente.`,
+          modalType: 'success',
+        })
+      );
+    };
+
+    if (cardDistanceDragged > 140 && !isPaid) dispatchInfo(true);
+    else if (cardDistanceDragged > 140 && isPaid) dispatchInfo(false);
+    else if (cardDistanceDragged < -140) setDeleteSubModal(true);
   };
 
   //* Handle card background
   const handleCardBackground = (e, data) => {
-    const draggingValue = data.x;
+    setCardDistanceDragged(data.x);
 
-    if (draggingValue > 0) setDraggingMode('editing-subscription');
+    if (cardDistanceDragged > 0 && !isPaid)
+      setDraggingMode('editing-subscription');
+    else if (cardDistanceDragged > 0 && isPaid)
+      setDraggingMode('not-paid-subscription');
     else setDraggingMode('deleting-subscription');
   };
 
-  //* Selectors
-  const filterInfo = useSelector(selectPriceFilterInfo);
+  //* Handle card action
+  const handleCardAction = () => {
+    if (cardDistanceDragged > 140 || cardDistanceDragged < -140)
+      handleDraggedCard();
+    else if (cardDistanceDragged < 10 && cardDistanceDragged > -10)
+      navigate(`/modify-subscription/${subscription.id}`);
+
+    setCardDistanceDragged(0);
+  };
 
   const navigate = useNavigate();
 
@@ -63,10 +109,15 @@ export default function SubscriptionCard({ subscription }) {
         ref={subscriptionCardContainerRef}
         className={`subscription-card-container ${draggingMode}`}
       >
-        {draggingMode === 'editing-subscription' ? (
+        {draggingMode === 'editing-subscription' && !isPaid ? (
           <div className='sub-bg-icon-container'>
             <MdPaid className='sub-bg-icon' />
             <p className='sub-icon-text'>Pagada</p>
+          </div>
+        ) : draggingMode === 'not-paid-subscription' && isPaid ? (
+          <div className='sub-bg-icon-container'>
+            <MdOutlineMoneyOffCsred className='sub-bg-icon' />
+            <p className='sub-icon-text'>No pagada</p>
           </div>
         ) : (
           <div className='sub-bg-icon-container'>
@@ -85,7 +136,7 @@ export default function SubscriptionCard({ subscription }) {
             style={{ backgroundColor: color }}
             className='subscription-card'
             ref={subscriptionCardRef}
-            onClick={() => navigate(`/modify-subscription/${subscription.id}`)}
+            onTouchEndCapture={handleCardAction}
           >
             <h3 style={{ color: textColor }}>{name}</h3>
             <h2 style={{ color: textColor }}>

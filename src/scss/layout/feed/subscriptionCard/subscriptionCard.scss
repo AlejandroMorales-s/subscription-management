@@ -46,6 +46,12 @@
     left: 0;
   }
 }
+.not-paid-subscription{
+  background-color: $red;
+  .sub-bg-icon-container{
+    left: 0;
+  }
+}
 .subscription-card{
   padding: 3rem 2rem;
   display: flex;
