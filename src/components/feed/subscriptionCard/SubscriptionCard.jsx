@@ -5,7 +5,7 @@ import { AiFillDelete } from 'react-icons/ai';
 import { MdPaid, MdOutlineMoneyOffCsred } from 'react-icons/md';
 //* Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 //* Selectors
 import { selectPriceFilterInfo } from '../../../features/filters/filtersSlice';
 import { modifyModalInfo } from '../../../features/modal/modalSlice';
@@ -32,6 +32,9 @@ export default function SubscriptionCard({ subscription }) {
 
   //* Dispatch
   const dispatch = useDispatch();
+
+  //* Navigate
+  const navigate = useNavigate();
 
   //* Selectors
   const filterInfo = useSelector(selectPriceFilterInfo);
@@ -90,8 +93,6 @@ export default function SubscriptionCard({ subscription }) {
 
     setCardDistanceDragged(0);
   };
-
-  const navigate = useNavigate();
 
   //* Use effect
   useEffect(() => {
