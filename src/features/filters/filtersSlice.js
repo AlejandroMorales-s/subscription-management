@@ -6,7 +6,7 @@ const initialState = {
     newTotalAmountToPayFiltered: 0,
     totalAmount: 0,
   },
-  subscriptionsFilter: {},
+  subscriptionsFilter: [],
 };
 
 const options = {
