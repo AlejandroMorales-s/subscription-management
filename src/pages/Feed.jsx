@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 //* Components
 import AddServiceButton from '../components/feed/AddServiceButton';
@@ -11,11 +11,31 @@ import Modal from '../components/Modal';
 import { selectSubscriptionsFilterInfo } from '../features/filters/filtersSlice';
 import { selectModalStatus } from '../features/modal/modalSlice';
 import { selectUserSubscriptionsLoading } from '../features/subscriptions/subscriptionsSlice';
+//* Custom functions
+import getPhaseOfNumberOfDaysForADate from '../utils/numberOfDaysBetweenTwoDates';
 
 export default function Feed() {
+  //* States
+  const [sortedSubscriptionsFiltered, setSortedSubscriptionsFiltered] =
+    useState([]);
+
+  //* Selectors
   const subscriptionsFiltered = useSelector(selectSubscriptionsFilterInfo);
   const subsLoading = useSelector(selectUserSubscriptionsLoading);
   const modalActive = useSelector(selectModalStatus);
+
+  //* Use effect
+  useEffect(() => {
+    if (subscriptionsFiltered.length) {
+      const subsCopy = [...subscriptionsFiltered];
+      subsCopy.sort(
+        (a, b) =>
+          getPhaseOfNumberOfDaysForADate(a.data.date, true) -
+          getPhaseOfNumberOfDaysForADate(b.data.date, true)
+      );
+      setSortedSubscriptionsFiltered(subsCopy);
+    }
+  }, [subscriptionsFiltered]);
 
   return (
     <>
@@ -25,7 +45,7 @@ export default function Feed() {
         <div className='subscriptions-container'>
           {subsLoading && <SubscriptionCardLoading />}
           {subscriptionsFiltered.length !== undefined &&
-            subscriptionsFiltered.map((sub) => {
+            sortedSubscriptionsFiltered.map((sub) => {
               return <SubscriptionCard key={sub.id} subscription={sub} />;
             })}
         </div>
