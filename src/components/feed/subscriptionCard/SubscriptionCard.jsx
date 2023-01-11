@@ -13,11 +13,12 @@ import { updateSubscription } from '../../../features/subscriptions/subscription
 import { selectUserData } from '../../../features/user/userSlice';
 //* Custom function
 import getContrast from '../../../utils/getContrastBetweenTwoColors';
+import getPhaseOfNumberOfDaysForADate from '../../../utils/numberOfDaysBetweenTwoDates';
 //* Components
 import DeleteSubscriptionModal from './DeleteSubscriptionModal';
 
 export default function SubscriptionCard({ subscription }) {
-  const { name, price, color, isPaid } = subscription.data;
+  const { name, price, color, date, isPaid } = subscription.data;
 
   //* States
   const [deleteSubModal, setDeleteSubModal] = useState(false);
@@ -140,9 +141,14 @@ export default function SubscriptionCard({ subscription }) {
             onTouchEndCapture={handleCardAction}
           >
             <h3 style={{ color: textColor }}>{name}</h3>
-            <h2 style={{ color: textColor }}>
-              ${priceController.toLocaleString()}
-            </h2>
+            <div className='sub-details-container'>
+              <h2 style={{ color: textColor }}>
+                ${priceController.toLocaleString()}
+              </h2>
+              <p style={{ color: textColor }}>
+                {isPaid ? 'Pagado' : getPhaseOfNumberOfDaysForADate(date)}
+              </p>
+            </div>
           </div>
         </Draggable>
       </div>
