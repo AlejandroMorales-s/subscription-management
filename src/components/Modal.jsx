@@ -36,13 +36,15 @@ export default function Modal({ type, message }) {
 
   //* Use effect
   useEffect(() => {
-    dispatch(
-      modifyModalInfo({
-        modalActive: true,
-        modalMessage: message,
-        modalType: type,
-      })
-    );
+    if (type && message) {
+      dispatch(
+        modifyModalInfo({
+          modalActive: true,
+          modalMessage: message,
+          modalType: type,
+        })
+      );
+    }
   }, [type, message]);
 
   return (
