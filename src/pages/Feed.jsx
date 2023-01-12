@@ -7,6 +7,8 @@ import Header from '../components/feed/header/Header';
 import SubscriptionCard from '../components/feed/subscriptionCard/SubscriptionCard';
 import SubscriptionCardLoading from '../components/feed/subscriptionCard/SubscriptionCardLoading';
 import Modal from '../components/Modal';
+//* Icons
+import { ImFileEmpty } from 'react-icons/im';
 //* Selectors
 import { selectSubscriptionsFilterInfo } from '../features/filters/filtersSlice';
 import { selectModalStatus } from '../features/modal/modalSlice';
@@ -43,11 +45,20 @@ export default function Feed() {
         <Header />
         <Filters />
         <div className='subscriptions-container'>
-          {subsLoading && <SubscriptionCardLoading />}
-          {subscriptionsFiltered.length !== undefined &&
+          {subsLoading && !subscriptionsFiltered.length ? (
+            <SubscriptionCardLoading />
+          ) : subscriptionsFiltered.length ? (
             sortedSubscriptionsFiltered.map((sub) => {
               return <SubscriptionCard key={sub.id} subscription={sub} />;
-            })}
+            })
+          ) : (
+            <div className='empty-subscriptions-screen-container'>
+              <ImFileEmpty className='empty-subscriptions-screen-icon' />
+              <h2 className='empty-subscriptions-screen-text'>
+                No hay suscripciones para mostrar!
+              </h2>
+            </div>
+          )}
         </div>
         <AddServiceButton />
       </div>
