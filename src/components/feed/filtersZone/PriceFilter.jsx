@@ -56,6 +56,7 @@ export default function PriceFilter() {
         filterTypeIndex: optionSelectedIndex,
       })
     );
+    // eslint-disable-next-line
   }, [subscriptions, optionSelectedIndex]);
 
   return (

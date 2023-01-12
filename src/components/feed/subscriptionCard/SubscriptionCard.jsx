@@ -103,6 +103,7 @@ export default function SubscriptionCard({ subscription }) {
 
     if (getContrast(color) > 10) setTextColor('#000000');
     else setTextColor('#ffffff');
+    // eslint-disable-next-line
   }, [filterInfo.filterType, subscription]);
 
   return (

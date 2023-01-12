@@ -100,6 +100,7 @@ export default function AddNewSubscription() {
 
       setSubscriptionInfo(subscription.data);
     }
+    // eslint-disable-next-line
   }, [userSubscriptions]);
 
   useEffect(() => {

@@ -45,6 +45,7 @@ export default function Modal({ type, message }) {
         })
       );
     }
+    // eslint-disable-next-line
   }, [type, message]);
 
   return (
