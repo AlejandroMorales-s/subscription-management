@@ -62,7 +62,12 @@ export default function PriceFilter() {
     <div onClick={handlePriceFilter} className='price-filter-container'>
       <div>
         <p>{priceFilter.filterType}</p>
-        <h2>${priceFilter.newTotalAmountToPayFiltered.toLocaleString()}</h2>
+        <h2>
+          $
+          {subscriptions.length
+            ? priceFilter.newTotalAmountToPayFiltered.toLocaleString()
+            : '0'}
+        </h2>
       </div>
       <CgArrowsV className='price-filter-icon' />
     </div>
