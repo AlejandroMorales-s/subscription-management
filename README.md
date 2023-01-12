@@ -6,6 +6,8 @@
 
 **Project in progress...**
 
+The app looks better in a mobile device.
+
 This app is for, easily, take control of your subscriptions like Netflix or Spotify.
 I develop this because I really can't have full control of my subscriptions, also with this app I can see the total amount of my subscriptions, so with this app I can solve those problems.
 
@@ -14,6 +16,10 @@ I develop this because I really can't have full control of my subscriptions, als
 ## Features
 
 * Sign Up/Login with email and password or social media.
+* Add/Modify subscriptions with name, custom color, date and payment frequency.
+* Ability to drag subscription card and, depending the direction of the drag, mark the subscription as paid or delete it.
+* Get the total amount paid for all your subscriptions by week, monthly or per year.
+* Filter subscriptions by subscriptions paid, subscriptions unpaid and show all the subscriptions.
 
 ---
 
