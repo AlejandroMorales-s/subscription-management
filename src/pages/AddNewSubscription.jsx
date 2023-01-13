@@ -13,6 +13,7 @@ import {
   selectErrorMessage,
   selectErrorStatus,
 } from '../features/error/errorSlice';
+import { modifyModalInfo } from '../features/modal/modalSlice';
 import {
   createSubscription,
   selectUserSubscriptions,
@@ -83,12 +84,30 @@ export default function AddNewSubscription() {
       return;
     }
 
-    if (subscriptionId)
+    if (subscriptionId) {
       modifySubHandler(userInfo.uid, {
         id: subscriptionId,
         data: subscriptionInfo,
       });
-    else addSubHandler(userInfo.uid, subscriptionInfo);
+      dispatch(
+        modifyModalInfo({
+          modalActive: true,
+          modalMessage: 'Información actualizada correctamente',
+          modalType: 'success',
+        })
+      );
+      navigate('/feed');
+    } else {
+      addSubHandler(userInfo.uid, subscriptionInfo);
+      dispatch(
+        modifyModalInfo({
+          modalActive: true,
+          modalMessage: 'Suscripción añadida correctamente',
+          modalType: 'success',
+        })
+      );
+      navigate('/feed');
+    }
   };
 
   //* Use effect
