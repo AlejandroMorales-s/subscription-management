@@ -1,0 +1,43 @@
+.user-name-input-form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .user-name-input-container{
+    display: flex;
+    gap: 1rem;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    .user-name-input{
+      border: none;   
+      font-weight: $medium;
+      font-size: 2.5rem;
+      min-width: 13rem;
+      &:focus{
+        outline: none;
+      }
+    }
+    .user-name-input-icon{
+      font-size: 2.5rem;
+      fill: $darkGray;
+    }
+  }
+  .submit-form-button-container{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1.5rem;
+    width: 100%;
+    button{
+      &:first-of-type{
+        @include primary-btn;
+        padding: 1rem 2rem;
+      }
+      &:last-of-type{
+        @include secondary-btn;
+        padding: 1rem 2rem;
+      }
+    }
+  }
+}

@@ -6,4 +6,8 @@
   gap: 2rem;
   position: relative;
   z-index: 100;
+  .header-icon{
+    font-size: 2.75rem;
+    fill: $black;
+  }
 }

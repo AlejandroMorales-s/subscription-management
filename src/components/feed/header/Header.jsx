@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 //* Selectors
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../../../features/user/userSlice';
-//* Components
-import HamburgerMenu from './HamburgerMenu';
+//* Icons
+import { AiTwotoneSetting } from 'react-icons/ai';
+//* Use navigate
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
   //* States
@@ -11,6 +13,9 @@ export default function Header() {
 
   //* Selectors
   const userInfo = useSelector(selectUserData);
+
+  //* Use navigate
+  const navigate = useNavigate();
 
   //* Actual hour
   const actualHour = new Date().getHours();
@@ -28,7 +33,10 @@ export default function Header() {
       <h2>
         {currentTime}, {userInfo.displayName}
       </h2>
-      <HamburgerMenu />
+      <AiTwotoneSetting
+        className='header-icon'
+        onClick={() => navigate('/account')}
+      />
     </header>
   );
 }

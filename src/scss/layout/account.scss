@@ -1,0 +1,26 @@
+.account-details-container{
+  padding-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+  .profile-photo-container{
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    overflow: hidden;
+    max-width: 20rem;
+    width: 100%;
+    border: 3px solid $primary;
+    .user-image-icon{
+      font-size: 20rem;
+    }
+  }
+  .close-session-button{
+    width: 100%;
+    @include primary-btn($red);
+  }
+}

@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 //* Custom js
 import { authChangeHandler, selectUserData } from './features/user/userSlice';
 import { auth } from './libs/firebase';
+import { readUserSubscriptions } from './features/subscriptions/subscriptionsSlice';
 //* Components
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Feed from './pages/Feed';
 import AddNewSubscription from './pages/AddNewSubscription';
-import { readUserSubscriptions } from './features/subscriptions/subscriptionsSlice';
+import Account from './pages/Account';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function App() {
       ) {
         navigate('/feed');
       } else if (
-        res.error.message === 'Session closed' &&
+        res.error?.message === 'Session closed' &&
         !availablePagesIfUserIsNotLogged.includes(currentLocation)
       ) {
         navigate('/');
@@ -49,6 +50,7 @@ function App() {
       <Route path='/signup' element={<SignUp />} />
       <Route path='/feed' element={<Feed />} />
       <Route path='/add-subscription' element={<AddNewSubscription />} />
+      <Route path='/account' element={<Account />} />
       <Route
         path='/modify-subscription/:subscriptionId'
         element={<AddNewSubscription />}

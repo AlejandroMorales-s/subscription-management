@@ -1,0 +1,18 @@
+.account-options-container{
+  width: 100%;
+  .account-option{
+    border-top: 3px solid $lightGray;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    &:last-of-type{
+      border-bottom: 3px solid $lightGray;
+    }
+    .account-option-icon{
+      font-size: 1.8rem;
+      fill: $text;
+    }
+  }
+}
