@@ -1,21 +1,19 @@
 import React from 'react';
 //* Icons
 import { IoIosArrowBack } from 'react-icons/io';
-import { AiOutlineUser } from 'react-icons/ai';
 //* Use navigate
 import { useNavigate } from 'react-router-dom';
 //* React redux
 import { useDispatch, useSelector } from 'react-redux';
-//* Selectors
-import {
-  logout,
-  selectIsSubmitting,
-  selectUserData,
-} from '../features/user/userSlice';
+//* Redux slices
+import { logout, selectIsSubmitting } from '../features/user/userSlice';
+import { selectModalStatus } from '../features/modal/modalSlice';
 //* Components
 import Spinner from '../components/Spinner';
 import ModifyUsername from '../components/account/ModifyUsername';
 import Options from '../components/account/Options';
+import Modal from '../components/Modal';
+import ProfileImage from '../components/account/ProfileImage';
 
 export default function Account() {
   //* Use navigate
@@ -25,8 +23,8 @@ export default function Account() {
   const dispatch = useDispatch();
 
   //* Selectors
-  const userInfo = useSelector(selectUserData);
   const isSubmitting = useSelector(selectIsSubmitting);
+  const modalStatus = useSelector(selectModalStatus);
 
   return (
     <>
@@ -38,13 +36,7 @@ export default function Account() {
         <h3>Cuenta</h3>
       </header>
       <main className='account-details-container'>
-        <div className={`profile-photo-container ${userInfo && ''}`}>
-          {userInfo.photoURL ? (
-            <img src={userInfo.photoURL} alt='Foto de perfil' />
-          ) : (
-            <AiOutlineUser className='user-image-icon' />
-          )}
-        </div>
+        <ProfileImage />
         <ModifyUsername />
         <Options />
         <button
@@ -55,6 +47,7 @@ export default function Account() {
           {isSubmitting ? <Spinner /> : 'Cerrar sesión'}
         </button>
       </main>
+      {modalStatus && <Modal />}
     </>
   );
 }
