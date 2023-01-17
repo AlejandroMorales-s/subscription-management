@@ -38,10 +38,12 @@ function App() {
         navigate('/');
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     dispatch(readUserSubscriptions(userData.uid));
+    // eslint-disable-next-line
   }, [userData]);
 
   return (
