@@ -17,6 +17,7 @@ export default function ModifyUsername() {
   const userInfo = useSelector(selectUserData);
 
   //* Update username
+  //TODO update username in db
   const handleUsernameUpdate = (e) => {
     e.preventDefault();
   };
