@@ -19,7 +19,7 @@ I develop this because I really can't have full control of my subscriptions, als
 * Add/Modify subscriptions with name, custom color, date and payment frequency.
 * Ability to drag subscription card and, depending the direction of the drag, mark the subscription as paid or delete it.
 * Get the total amount paid for all your subscriptions by week, monthly or per year.
-* Filter subscriptions by subscriptions paid, subscriptions unpaid and show all the subscriptions.
+* Filter subscriptions by subscription name, subscriptions paid, subscriptions unpaid and show all the subscriptions.
 
 ---
 
