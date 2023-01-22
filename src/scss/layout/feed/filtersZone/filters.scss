@@ -1,7 +1,12 @@
 .filters-container{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1.5rem;
   padding: 0.5rem 0;
   margin-bottom: 2rem;
+  div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }

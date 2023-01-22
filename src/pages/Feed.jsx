@@ -41,7 +41,7 @@ export default function Feed() {
 
   return (
     <>
-      <div style={{ minHeight: '100vh', paddingBottom: '12.5rem' }}>
+      <div style={{ minHeight: '100vh', paddingBottom: '13rem' }}>
         <Header />
         <Filters />
         <div className='subscriptions-container'>

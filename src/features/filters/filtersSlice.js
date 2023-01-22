@@ -59,14 +59,23 @@ const options = {
         state.subscriptionsFilter = getUnpaidSubs;
       }
     },
+    setSubscriptionsInFilter: (state, action) => {
+      if (action.payload[0] === undefined)
+        state.subscriptionsFilter = [action.payload];
+      else state.subscriptionsFilter = action.payload;
+    },
   },
 };
 
 const filtersSlice = createSlice(options);
 
 //* Exporting reducers
-export const { setTotalAmountToPay, modifyPriceFilter, subscriptionsFilter } =
-  filtersSlice.actions;
+export const {
+  setTotalAmountToPay,
+  setSubscriptionsInFilter,
+  modifyPriceFilter,
+  subscriptionsFilter,
+} = filtersSlice.actions;
 
 //* Selectors
 export const selectPriceFilterInfo = (state) => state.filters.priceFilter;
