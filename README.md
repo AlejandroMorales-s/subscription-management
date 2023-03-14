@@ -4,8 +4,6 @@
 
 ## Description
 
-**Project in progress...**
-
 The app looks better in a mobile device.
 
 This app is for, easily, take control of your subscriptions like Netflix or Spotify.
