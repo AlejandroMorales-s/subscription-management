@@ -24,6 +24,7 @@ I develop this because I really can't have full control of my subscriptions, als
 ## How to use
 
 * First, you need to clone the repository on your computer. You can do that following this steps:
+  
   1- In the directory in you want to save the project, open your terminal and paste this line:
 
   ```bash
